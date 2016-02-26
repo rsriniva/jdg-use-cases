@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+   <title>Infinispan CDI Quickstart</title>
+   <h:outputScript library="js" name="jquery-1.6.2.min.js"/>
+   <h:outputStylesheet library="css" name="styles.css"/>
+   <script type="text/javascript">
+      $(window).load(function() {
+         $('#name').bind('focus', function() {
+            $(this).attr('value', '');
+         });
+      });
+   </script>
+</h:head>
+
+<h:body>
+
+   <div id="wrapper">
+
+      <div id="header"/>
+
+      <div id="content">
+         <h:form prependId="false">
+            <h2><h:outputText value="Cache form"/></h2>
+            <h:messages id="errors" errorClass="error"/>
+            <h:inputText id="key" value="#{cacheController.key}" label="Key" required="true"/><br/>
+            <h:inputText id="value" value="#{cacheController.value}" label="Value" required="true"/>
+            <h:commandButton value="Save" action="#{cacheController.guardarObjeto()}">
+               <f:ajax execute="key value" render="errors cache-size"/>
+            </h:commandButton>
+            <br/>
+
+			<h2><h:outputText value="Cache query"/></h2>
+			<h:inputText id="key-qry" value="#{cacheController.key}" label="Key" required="true"/><br/>
+			<h:commandButton value="Get" action="#{cacheController.obtenerValor()}">
+               <f:ajax execute="key-qry" render="errors cache-size result"/>
+            </h:commandButton>
+             <ul>
+               <li><h:outputText id="result" value="Value: #{cacheController.value}"/></li>
+            </ul>
+            
+            
+            <h2><h:outputText value="Cache information"/></h2>
+            <ul>
+               <li><h:outputText id="cache-name" value="Cache name: #{cacheController.cacheName}"/></li>
+            </ul>
+
+            <h2>
+               <h:outputText id="cache-size" value="Cache Size - #{cacheController.cacheSize}"/>
+            </h2>
+         </h:form>
+      </div>
+   </div>
+
+</h:body>
+
+</html>

@@ -1,0 +1,9 @@
+package model;
+
+message UserBaseInfo {
+   required string userId = 1;
+   required string imsi = 2;
+   required string msisdn = 3;
+   required string homeCity = 4;
+   required string testFlag = 5;
+}

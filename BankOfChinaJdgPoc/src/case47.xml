@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<infinispan xsi:schemaLocation="urn:infinispan:config:6.0 http://www.infinispan.org/schem as/infinispan-config-6.0.xsd" 
+            xmlns:xsi="http://www.w3.org/2001/XMLSchem a-instance"
+            xmlns="urn:infinispan:config:6.0">
+    
+    <global> 
+        <transport>
+            <properties>
+                <property name="configurationFile" value="jgroups.xml"/>
+            </properties> 
+        </transport>
+    </global>
+     
+    <default>
+        <clustering mode="replication"> 
+            <sync/>
+        </clustering> 
+    </default>
+    
+    <namedCache name="repl">
+        <transaction transactionManagerLookupClass="org.infinispan.transaction.lookup.GenericTransactionManagerLookup" 
+                     transactionMode="TRANSACTIONAL" lockingMode="OPTIMISTIC" useSynchronization="false" autoCommit="false"
+        />      
+    </namedCache>
+
+    <namedCache name="dist">
+        <!-- Configure a synchronous distribution cache -->
+        <clustering mode="distribution">
+            <sync/>
+            <hash numOwners="2"/>
+        </clustering>
+    </namedCache>
+</infinispan>
